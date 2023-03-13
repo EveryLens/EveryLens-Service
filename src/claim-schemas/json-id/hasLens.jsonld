@@ -1,0 +1,25 @@
+{
+  "@context": [
+    {
+      "@version": 1.1,
+      "@protected": true,
+      "id": "@id",
+      "type": "@type",
+      "HasLensCredential": {
+        "@id": "https://raw.githubusercontent.com/EveryLens/EveryLens-Service/main/src/claim-schemas/json-id/hasLens.jsonld#HasLensCredential",
+        "@context": {
+          "@version": 1.1,
+          "@protected": true,
+          "id": "@id",
+          "type": "@type",
+          "hasLens-vocab": "https://raw.githubusercontent.com/EveryLens/EveryLens-Service/main/src/claim-schemas/credentials/hasLens.md#",
+          "xsd": "http://www.w3.org/2001/XMLSchema#",
+          "ethereumAddress": {
+            "@id": "hasLens-vocab:ethereumAddress",
+            "@type": "xsd:string"
+          }
+        }
+      }
+    }
+  ]
+}
