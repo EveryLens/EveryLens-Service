@@ -51,7 +51,7 @@ export const waitAsyncResult = <T extends () => Promise<any>>(
             return;
           }
           const res = await fetcher();
-          if (res) {
+          if (res?.status === 200) {
             resolve(res);
             return;
           }
