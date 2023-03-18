@@ -16,8 +16,4 @@ export class AppService {
 
     return !!defaultProfile;
   }
-
-  async createClaim(address: string): Promise<boolean> {
-    
-  }
 }

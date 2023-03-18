@@ -6,11 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { AppService } from './app.service';
-
-function isValidEthAddress(str: string): boolean {
-  const ethAddressRegex = /^0x[a-fA-F0-9]{40}$/;
-  return ethAddressRegex.test(str);
-}
+import { checkIsValidEthAddress } from './utils';
 
 @Controller('claim')
 export class AppController {
@@ -18,15 +14,7 @@ export class AppController {
 
   @Get()
   async claim(@Query() query: { address: string }): Promise<any> {
-    if (!isValidEthAddress(query.address)) {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'Not a valid ethereum address',
-        },
-        HttpStatus.BAD_REQUEST
-      );
-    }
+    checkIsValidEthAddress(query.address);
 
     if (!(await this.appService.queryHasLens(query.address))) {
       throw new HttpException(
@@ -34,7 +22,7 @@ export class AppController {
           status: HttpStatus.BAD_REQUEST,
           error: 'Address does not have a Lens profile',
         },
-        HttpStatus.BAD_REQUEST
+        HttpStatus.BAD_REQUEST,
       );
     }
 
