@@ -111,3 +111,52 @@ export class ClaimController {
     return VCinfo;
   }
 }
+
+@Controller('verify')
+export class VerifierController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get()
+  async verify(): Promise<any> {
+    const response = await fetch(
+      `https://self-hosted-demo-backend-platform.polygonid.me/api/sign-in?type=custom`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          circuitId: 'credentialAtomicQuerySigV2',
+          requestID: 1,
+          query: {
+            type: 'HasLensCredential',
+            allowedIssuers: ['*'],
+            context:
+              'https://raw.githubusercontent.com/EveryLens/EveryLens-Service/main/src/claim-schemas/json-id/hasLens.jsonld',
+          },
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    ).then((res) => res.json());
+
+    const statusQueryUrl = response?.body?.callbackUrl
+      ?.replace(/callback/g, 'status')
+      .replace(/sessionId/g, 'id');
+    const [authSignInPromise] = waitAsyncResult(
+      () => fetch(statusQueryUrl),
+      100,
+      3,
+    );
+
+    authSignInPromise
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+
+    return {
+      ...response,
+      statusQueryUrl,
+    };
+  }
+}
