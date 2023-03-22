@@ -129,7 +129,7 @@ export class VerifierController {
             type: 'HasLensCredential',
             allowedIssuers: ['*'],
             context:
-              'https://raw.githubusercontent.com/EveryLens/EveryLens-Service/main/src/claim-schemas/json-id/hasLens.jsonld',
+              'https://raw.githubusercontent.com/EveryLens/EveryLens-Service/main/src/claim-schemas/json-id/hasLens.json-ld',
           },
         }),
         headers: {

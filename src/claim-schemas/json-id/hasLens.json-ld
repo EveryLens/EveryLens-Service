@@ -6,7 +6,7 @@
       "id": "@id",
       "type": "@type",
       "HasLensCredential": {
-        "@id": "https://raw.githubusercontent.com/EveryLens/EveryLens-Service/main/src/claim-schemas/json-id/hasLens.jsonld#HasLensCredential",
+        "@id": "https://raw.githubusercontent.com/EveryLens/EveryLens-Service/main/src/claim-schemas/json-id/hasLens.json-ld#HasLensCredential",
         "@context": {
           "@version": 1.1,
           "@protected": true,
