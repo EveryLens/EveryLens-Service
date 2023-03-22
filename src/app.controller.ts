@@ -130,6 +130,11 @@ export class VerifierController {
             allowedIssuers: ['*'],
             context:
               'https://raw.githubusercontent.com/EveryLens/EveryLens-Service/main/src/claim-schemas/json-ld/hasLens.json-ld',
+            credentialSubject: {
+              test: {
+                $eq: 1,
+              },
+            },
           },
         }),
         headers: {
