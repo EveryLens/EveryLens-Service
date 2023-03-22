@@ -1,7 +1,7 @@
-# ethereumAddress
+# test
 
-ethereumAddress represents 0x...
+test represents 0
 
 ```
-  "ethereumAddress": 0x...
+  "test": 0
 ```

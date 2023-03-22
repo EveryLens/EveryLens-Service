@@ -93,7 +93,7 @@ export class ClaimController {
           url: 'https://raw.githubusercontent.com/EveryLens/EveryLens-Service/main/src/claim-schemas/json/HasLensCredential.json',
           type: 'HasLensCredential',
           data: {
-            ethereumAddress: query.address,
+            test: 1,
           },
           schema: 'Custom',
           expiration: 1893456000,
@@ -129,7 +129,7 @@ export class VerifierController {
             type: 'HasLensCredential',
             allowedIssuers: ['*'],
             context:
-              'https://raw.githubusercontent.com/EveryLens/EveryLens-Service/main/src/claim-schemas/json-id/hasLens.json-ld',
+              'https://raw.githubusercontent.com/EveryLens/EveryLens-Service/main/src/claim-schemas/json-ld/hasLens.json-ld',
           },
         }),
         headers: {
