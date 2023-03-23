@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Post,
   Query,
   HttpException,
   HttpStatus,
@@ -8,6 +9,7 @@ import {
 import { AppService } from './app.service';
 import { checkIsValidEthAddress, waitAsyncResult } from './utils';
 import fetch from 'node-fetch';
+import { createPostTypedData, broadcastTransaction, metadataTemplate } from './utils/post';
 
 const didIdMap = new Map<string, string>();
 
@@ -163,5 +165,34 @@ export class VerifierController {
       ...response,
       statusQueryUrl,
     };
+  }
+}
+
+
+@Controller('post')
+export class PostController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get()
+  async post(@Query() query: { name: string; content: string; description: string; }): Promise<any> {
+    const metadata = {
+      ...metadataTemplate,
+      name: query.name,
+      description: query.description,
+      content: query.content,
+    }
+    const typedDataResult = await createPostTypedData(metadata);
+    const txId = await broadcastTransaction(typedDataResult);
+    if (!txId) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Failed to broadcast transaction',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return txId;
   }
 }
