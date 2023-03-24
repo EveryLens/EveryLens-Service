@@ -5,11 +5,13 @@ import {
   PublicationMainFocus,
   isRelayerResult,
 } from '@lens-protocol/client';
+import { Utils } from 'alchemy-sdk';
 import { uploadIpfsGetPath } from './Storage';
+import { lensHub } from './lens-hub';
 const uuid = require('uuid');
 
 export const metadataTemplate: PublicationMetadataV2Input = {
-  appId: 'lenster',
+  appId: 'everyLens',
   attributes: [
     {
       displayType: PublicationMetadataDisplayTypes.String,
@@ -56,6 +58,7 @@ export const broadcastTransaction = async (
   typedDataResult: Awaited<ReturnType<typeof createPostTypedData>>,
 ) => {
   const data = typedDataResult.unwrap();
+  const typedData = data.typedData;
 
   // sign with the wallet
   const signedTypedData = await wallet.signTypedData(
@@ -78,6 +81,12 @@ export const broadcastTransaction = async (
     return;
   }
   return broadcastResultValue.txId;
+};
+
+export const indexPost = async (txId: string) => {
+  await lensClient.transaction.waitForIsIndexed(txId);
+  let res = lensClient.transaction.wasIndexed(txId);
+  return res;
 };
 
 // createPostTypedData(metadataTemplate).then((typedDataResult) => (broadcastTransaction(typedDataResult)));
