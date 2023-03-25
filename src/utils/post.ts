@@ -11,7 +11,7 @@ import { lensHub } from './lens-hub';
 const uuid = require('uuid');
 
 export const metadataTemplate: PublicationMetadataV2Input = {
-  appId: 'everyLens',
+  appId: 'lenster',
   attributes: [
     {
       displayType: PublicationMetadataDisplayTypes.String,
@@ -39,7 +39,10 @@ export const createPostTypedData = async (
     throw new Error(`Metadata is not valid.`);
   }
 
-  const contentURI = await uploadIpfsGetPath(metadata);
+  const cid = await uploadIpfsGetPath(metadata);
+  const contentURI = `https://${cid}.ipfs.dweb.link`;
+  // const contentURI =
+  //   'ipfs://bafybeihbmh7gv4a3bolabg6igcgf762r7czbce6uajezb6joutu4a5zj2a';
   const typedDataResult = await lensClient.publication.createPostTypedData({
     profileId: '0x7271',
     contentURI,
